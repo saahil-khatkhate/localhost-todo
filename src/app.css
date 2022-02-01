@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    padding: 20vh 0;
+}
+
+.newItem, .newItemButton, .clearButton {
+    border-radius: 0.5em;
+    padding: 1em 1.5em;
+    margin: 0.5em 0.5em;
+    border: #aaa 2px solid;
+    transition: 0.3s;
+}
+.newItem:focus, .newItem:hover {
+    border-color: orangered;
+}
+
+.newItemButton, .clearButton {
+    border-color: orangered;
+    color: white;
+    background-color: orangered;
+    cursor: pointer;
+}
+
+.newItemButton:hover, .clearButton:hover {
+    background-color: rgba(255, 69, 0, 0.8);
+}
+
+.clearButton {
+    padding: 0.5em 1.5em;
+}
