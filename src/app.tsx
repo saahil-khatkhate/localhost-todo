@@ -46,6 +46,19 @@ const App: React.FC = () => {
         updateTaskList(newTasks);
     };
 
+    const clearAllTasks = () => {
+        const newTasks = [];
+        updateTaskList(newTasks);
+    };
+
+    const clearCompleteTasks = () => {
+        const newTasks = [];
+        tasks.forEach(task => {
+            if (!task.isChecked) newTasks.push(task);
+        });
+        updateTaskList(newTasks);
+    };
+
     return (
         <div className='wrapper'>
             <div className='container'>
@@ -54,8 +67,8 @@ const App: React.FC = () => {
                     <button className='newTaskButton mainButton'>Add</button>
                 </form>
                 <div className='clearButtons'>
-                    <button className='clearButton mainButton'>Clear All</button>
-                    <button className='clearButton mainButton'>Clear Completed</button>
+                    <button className='mainButton' onClick={clearAllTasks}>Clear All</button>
+                    <button className='mainButton' onClick={clearCompleteTasks}>Clear Completed</button>
                 </div>
                 <div className='taskContainer'> {
                     tasks.map((task: Task, i: number) => {
