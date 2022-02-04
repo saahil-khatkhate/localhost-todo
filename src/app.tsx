@@ -1,18 +1,79 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './app.css';
+import Task from './task';
+
+export interface Task {
+    content: string,
+    isChecked: boolean
+};
 
 const App: React.FC = () => {
-  return (
-    <div className='container'>
-        <form>
-            <input name='item' type='text' placeholder='Add an item...' autoComplete='off' className='newItem' />
-            <button className='newItemButton'>Add</button>
-        </form>
-        <button className='clearButton'>Clear All</button>
-        <button className='clearButton'>Clear Completed</button>
-    </div>
-  );
+    const [tasks, setTasks] = useState<Task[]>([]);
+
+    useEffect(() => {
+        const loadedTasks: Task[] = JSON.parse(localStorage.getItem('tasks')) || [];
+        setTasks(loadedTasks);
+    }, []);
+
+    const updateTaskList = (newTasks: Task[]) => {
+        setTasks(newTasks);
+        localStorage.setItem('tasks', JSON.stringify(newTasks));
+    };
+
+    const createTask = (e) => {
+        e.preventDefault();
+        const taskContent: string = e.target.elements.task.value;
+        if (taskContent.trim() != '') {
+            const newTasks: Task[] = [...tasks, {
+                content: taskContent,
+                isChecked: false
+            }];
+            updateTaskList(newTasks);
+        }
+        e.target.elements.task.value = '';
+    };
+
+    const taskChecked = (index: number, state: boolean) => {
+        const newTasks: Task[] = [...tasks];
+        newTasks[index].isChecked = state;
+        updateTaskList(newTasks);
+    };
+
+    const deleteTask = (index: number) => {
+        const newTasks: Task[] = [...tasks];
+        newTasks.splice(index, 1);
+        updateTaskList(newTasks);
+    };
+
+    return (
+        <div className='wrapper'>
+            <div className='container'>
+                <form onSubmit={createTask} className='newTaskForm'>
+                    <input name='task' type='text' placeholder='Add a task...' autoComplete='off' className='newTaskInput' />
+                    <button className='newTaskButton mainButton'>Add</button>
+                </form>
+                <div className='clearButtons'>
+                    <button className='clearButton mainButton'>Clear All</button>
+                    <button className='clearButton mainButton'>Clear Completed</button>
+                </div>
+                <div className='taskContainer'> {
+                    tasks.map((task: Task, i: number) => {
+                        return (
+                            <Task
+                                key={i}
+                                index={i}
+                                task={task}
+                                functions={{
+                                    taskChecked,
+                                    deleteTask
+                                }} />
+                        );
+                    })
+                } </div>
+            </div>
+        </div>
+    );
 };
 
 export default App;

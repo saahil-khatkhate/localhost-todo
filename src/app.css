@@ -1,3 +1,7 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css');
+
+/* global */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,35 +9,127 @@
     outline: none;
 }
 
-.container {
-    width: 100vw;
-    height: 100vh;
-    text-align: center;
-    padding: 20vh 0;
+:root {
+    --accent: #606c38;
+    --accent-dark: #283618;
+    --background: #fefae0;
+    --neutral: #aaa;
+    --light: #dda15e;
+    --dark: #bc6c25;
 }
 
-.newItem, .newItemButton, .clearButton {
+/* main container */
+
+.wrapper {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: var(--background);
+    padding: 20vh 0;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.container {
+    width: clamp(310px, 30vw, 470px);
+    display: flex;
+    flex-direction: column;
+}
+
+/* main form and buttons */
+
+.newTaskForm {
+    display: flex;
+    flex-direction: row;
+}
+
+.newTaskInput {
     border-radius: 0.5em;
     padding: 1em 1.5em;
     margin: 0.5em 0.5em;
-    border: #aaa 2px solid;
+    border: var(--neutral) 2px solid;
     transition: 0.3s;
-}
-.newItem:focus, .newItem:hover {
-    border-color: orangered;
+    flex: 1;
 }
 
-.newItemButton, .clearButton {
-    border-color: orangered;
+.newTaskInput:focus, .newTaskInput:hover {
+    border-color: var(--accent);
+}
+
+.mainButton {
+    border-radius: 0.5em;
+    padding: 1em 1.5em;
+    margin: 0.5em 0.5em;
+    border: var(--accent) 2px solid;
+    transition: 0.3s;
     color: white;
-    background-color: orangered;
+    background-color: var(--accent);
     cursor: pointer;
 }
 
-.newItemButton:hover, .clearButton:hover {
-    background-color: rgba(255, 69, 0, 0.8);
+.mainButton:hover {
+    border-color: var(--accent-dark);
+}
+
+.clearButtons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
 }
 
 .clearButton {
     padding: 0.5em 1.5em;
+    flex: 1;
+}
+
+/* tasks */
+
+.taskContainer {
+    padding-top: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0.5em;
+}
+
+.task {
+    background-color: var(--light);
+    /* border: 2px var(--dark) solid; */
+    border-radius: 0.5em;
+    padding: 0.7em 0.5em;
+    margin: 1vh 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.checkBox {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    border: 1px solid var(--dark);
+    margin-right: 0.5em;
+    cursor: pointer;
+}
+
+.checkBox.checked {
+    background-color: var(--dark);
+}
+
+.checkBox.checked + p {
+    text-decoration: line-through;
+}
+
+.content {
+    flex: 1 0;
+}
+
+.deleteButton {
+    background: none;
+    border: none;
+    color: var(--dark);
+    cursor: pointer;
+    font-weight: bold;
 }
